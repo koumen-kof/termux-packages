@@ -16,7 +16,6 @@ TERMUX_PKG_SRCURL=(https://dl.bintray.com/termux/upstream/ncurses-${TERMUX_PKG_V
 TERMUX_PKG_BREAKS="ncurses-dev, ncurses-utils (<< 6.1.20190511-4)"
 TERMUX_PKG_REPLACES="ncurses-dev, ncurses-utils (<< 6.1.20190511-4)"
 
-# --without-normal disables static libraries:
 # --disable-stripping to disable -s argument to install which does not work when cross compiling:
 TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 ac_cv_header_locale_h=no
@@ -32,9 +31,9 @@ ac_cv_header_locale_h=no
 --without-ada
 --without-cxx-binding
 --without-debug
---without-normal
---without-static
 --without-tests
+--with-normal
+--with-static
 --with-shared
 --with-termpath=$TERMUX_PREFIX/etc/termcap:$TERMUX_PREFIX/share/misc/termcap
 "
@@ -56,15 +55,19 @@ termux_step_post_make_install() {
 		for file in lib${lib}w.so*; do
 			ln -s $file ${file/w./.}
 		done
+		for file in lib${lib}w.a; do
+			ln -s $file ${file/w./.}
+		done
 		(cd pkgconfig; ln -sf ${lib}w.pc $lib.pc)
 	done
 
 	# Compatibility symlinks (libcurses, libtic, libtinfo)
 	for lib in curses tic tinfo; do
-		rm -f lib${lib}.so*
+		rm -f lib${lib}.so* lib${lib}.a
 		ln -sfr libncursesw.so.${TERMUX_PKG_VERSION:0:3} lib${lib}.so.${TERMUX_PKG_VERSION:0:3}
 		ln -sfr libncursesw.so.${TERMUX_PKG_VERSION:0:3} lib${lib}.so.${TERMUX_PKG_VERSION:0:1}
 		ln -sfr libncursesw.so.${TERMUX_PKG_VERSION:0:3} lib${lib}.so
+		ln -sfr libncursesw.a lib${lib}.a
 		(cd pkgconfig; ln -sfr ncursesw.pc ${lib}.pc)
 	done
 
