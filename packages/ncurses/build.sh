@@ -38,10 +38,7 @@ ac_cv_header_locale_h=no
 --with-shared
 --with-termpath=$TERMUX_PREFIX/etc/termcap:$TERMUX_PREFIX/share/misc/termcap
 "
-TERMUX_PKG_INCLUDE_IN_DEVPACKAGE="
-share/man/man1/ncursesw6-config.1*
-bin/ncursesw6-config
-"
+
 TERMUX_PKG_RM_AFTER_INSTALL="
 share/man/man5
 share/man/man7
