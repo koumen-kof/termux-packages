@@ -6,6 +6,8 @@ TERMUX_PKG_REVISION=2
 TERMUX_PKG_SRCURL=https://fossies.org/linux/misc/procps-ng-$TERMUX_PKG_VERSION.tar.xz
 TERMUX_PKG_SHA256=10bd744ffcb3de2d591d2f6acf1a54a7ba070fdcc432a855931a5057149f0465
 TERMUX_PKG_DEPENDS="ncurses"
+TERMUX_PKG_BREAKS="procps-dev"
+TERMUX_PKG_REPLACES="procps-dev"
 TERMUX_PKG_BUILD_IN_SRC=yes
 
 # error.h and stdio_ext.h in unified headers does
